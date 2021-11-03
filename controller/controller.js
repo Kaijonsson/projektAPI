@@ -16,7 +16,6 @@ exports.list_all = function (req, res) {
               data: data,
             },
           });
-          client.close();
         }
       });
   });
