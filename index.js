@@ -1,10 +1,17 @@
-const http = require("http");
-const app = require("./app");
-const server = http.createServer(app);
+"use strict";
+require("dotenv").config();
+require("./config/database");
+const express = require("express");
+const app = express();
+const port = process.env.PORT || 3000;
+const bodyParser = require("body-parser");
 
-const { API_PORT } = process.env;
-const port = process.env.PORT || API_PORT;
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
-server.listen(port, () => {
-  console.log(`Server running on port ${port}`);
-});
+var routes = require("./routes/routes"); //importing route
+routes(app); //register the route
+
+app.listen(port);
+
+console.log("todo list RESTful API server started on: " + port);

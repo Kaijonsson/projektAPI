@@ -1,35 +1,16 @@
 const { MongoClient } = require("mongodb");
+const URI = process.env.MONGO_URI;
 
-const uri = process.env.MONGO_URI;
-const client = new MongoClient(uri, {
+const client = new MongoClient(URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
-client.connect(async (err) => {
-  const collection = await client
-    .db("users_api")
-    .collection("users")
-    .find({})
-    .toArray();
-  // perform actions on the collection object
-  console.log(collection);
+client.connect((err) => {
   if (err) {
     console.log(err);
   }
+  console.log("Successfull connection");
   client.close();
 });
 
-/*
-const client = await MongoClient.connect('yourMongoURL', { 
-    useNewUrlParser: true, 
-    useUnifiedTopology: true,
-});
-// specify the DB's name
-const db = client.db('nameOfYourDB');
-// execute find query
-const items = await db.collection('items').find({}).toArray();
-console.log(items);
-// close connection
-client.close();
-
-*/
+module.exports.client = client;
