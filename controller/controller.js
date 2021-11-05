@@ -1,7 +1,7 @@
 "use strict";
 const { client } = require("../config/database");
 
-exports.list_all = function (req, res) {
+exports.list_all = (req, res) => {
   client.connect((err) => {
     if (err) console.error(err);
     const collection = client.db("users_api").collection("users");
