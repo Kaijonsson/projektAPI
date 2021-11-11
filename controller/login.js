@@ -3,13 +3,10 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
 exports.user_login = async (req, res) => {
-  console.log("hej");
   try {
     const { username, password } = req.body;
+    console.log(req.body);
 
-    if (!(username && password)) {
-      res.status(400).send("All input is required");
-    }
     const user = await User.findOne({ username });
 
     if (user && (await bcrypt.compare(password, user.password))) {
@@ -22,8 +19,17 @@ exports.user_login = async (req, res) => {
       );
 
       user.token = token;
-
-      res.status(200).json(user);
+      res.status(200).send({
+        status: "200",
+        user: {
+          username: username,
+          token: token,
+        },
+      });
+    } else {
+      res.status(400).send({
+        message: "No matching user found",
+      });
     }
   } catch (err) {
     console.log(err);

@@ -11,10 +11,9 @@ exports.list_all = (req, res) => {
       .then((data) => {
         if (data) {
           res.status(200).json({
-            status: "success",
-            data: {
-              data: data,
-            },
+            status: "200",
+            message: "Success",
+            data: data,
           });
         }
       })

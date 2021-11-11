@@ -8,13 +8,15 @@ module.exports = (app) => {
   const registeredUsers = require("../controller/registeredUsers");
   const authorized = require("../controller/mainContent");
 
-  app.route("/users").get(controller.list_all);
-
   app.route("/login").post(login.user_login);
 
   app.route("/register").post(register.user_register);
 
-  app.route("/registered/all").get(registeredUsers.registered_users);
+  app
+    .route("authorized/registered/all")
+    .get(auth, registeredUsers.registered_users);
 
-  app.route("/authorized").post(auth, authorized.mainContent);
+  app.route("/authorized").get(auth, authorized.mainContent);
+
+  app.route("/authorized/api/all_users").post(auth, controller.list_all);
 };

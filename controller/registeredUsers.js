@@ -2,7 +2,11 @@
 const User = require("../model/userSchema");
 
 exports.registered_users = async (req, res) => {
-  const users = await User.find({});
-  console.log(users);
-  res.send(users);
+  try {
+    const users = await User.find({});
+    console.log(users);
+    res.send(users);
+  } catch (error) {
+    console.log(error);
+  }
 };
